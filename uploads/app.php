@@ -11,6 +11,18 @@
         echo json_encode($res);
     });
 
+    $router->post("/camper",function(){
+        $_DATA = json_decode(file_get_contents("php://input"),true);
+        $conexion = new \App\connect();
+        $res=$conexion->con->prepare("INSERT INTO tb_camper (nombre,edad) VALUES (:NOMBRE, :EDAD)");
+        $res->bindValue("NOMBRE",$_DATA["nombre"]);
+        $res->bindValue("EDAD",$_DATA["edad"]);
+
+        $res->execute();
+        $res = $res->rowCount();
+        echo json_encode($res);
+
+    });
     $router->put("/camper", function(){
         $_DATA = json_decode(file_get_contents("php://input"), true);
         $conexion = new \App\connect();
